@@ -15,6 +15,7 @@ require __DIR__ . '/phpmailer/SMTP.php';
 <html>
 <head>
     <title>Récupération de mot de passe</title>
+    <link rel="icon" type="png" href="icon.png">
 </head>
 <body>
     <?php

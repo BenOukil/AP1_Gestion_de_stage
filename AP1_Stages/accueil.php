@@ -2,116 +2,104 @@
 session_start();
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <title>Accueil</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiblioStage - Accueil</title>
+    <link rel="icon" type="png" href="icon.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <header>
-        <!-- Menu -->
-        <?php
-        include '_conf.php';
-        ?>
+    <?php include '_conf.php'; ?>
 
-        <?php
-        if (isset($_POST['sign_out'])) {
-            session_destroy();
-            ?>
-            <h1>Déconnexion réussie</h1>
-            <?php
-        } else {
-            
-            }
-        ?>
+    <?php
+    // Connexion
+    if (isset($_POST['send_con'])) {
+        $login = $_POST['login'];
+        $motdepasse = md5($_POST['motdepasse']);
+        $connexion = mysqli_connect($serveurBDD, $userBDD, $mdpBDD, $nomBDD);
+        $requete = "SELECT * FROM utilisateur WHERE login = '$login' AND motdepasse = '$motdepasse'";
+        $resultat = mysqli_query($connexion, $requete);
+        $trouve = 0;
+        while ($donnees = mysqli_fetch_assoc($resultat)) {
+            $trouve = 1;
+            $_SESSION['Sid'] = $donnees['num'];
+            $_SESSION['Stype'] = $donnees['type'];
+            $_SESSION['Slogin'] = $donnees['login'];
+            $_SESSION['Semail'] = $donnees['email'];
+            $_SESSION['Snom'] = $donnees['nom'];
+            $_SESSION['Sprenom'] = $donnees['prenom'];
+            $_SESSION['Stel'] = $donnees['tel'];
+        }
+    }
+
+    // Déconnexion
+    if (isset($_GET['logout'])) {
+        session_destroy();
+        header("Location: index.php");
+        exit();
+    }
+    ?>
+
+    <!-- Header avec navigation -->
+    <header>
+        <?php if ($_SESSION['Stype'] == 1) { 
+        include "menu_eleve.php";
+        
+     }
+     else {
+        include "menu_prof.php";
+     } ?>
     </header>
 
-    <body>
-        <?php
-        /*********************************************
-        On se connecte si on arrive d'un form de connexion
-        *********************************************/
-        if (isset($_POST['send_con'])) {
-            $login = $_POST['login'];
-            $motdepasse = $_POST['motdepasse'];
-            $motdepasse = md5($motdepasse);
+    <main class="auth-container">
+        <div class="site-branding">
+            <h1><i class="fas fa-book-open"></i> BiblioStage</h1>
+            <p>Votre plateforme de comptes-rendus de stage</p>
+            
+        </div>
 
-            $connexion = mysqli_connect($serveurBDD, $userBDD, $mdpBDD, $nomBDD);
-            $requete = "SELECT * FROM utilisateur WHERE login = '$login' AND motdepasse = '$motdepasse' ";
-            
-            $resultat = mysqli_query($connexion, $requete);
-            $trouve = 0;
-            
-            while ($donnees = mysqli_fetch_assoc($resultat)) {
-                
-                $trouve = 1;
-                $_SESSION['Sid'] = $donnees['num'];
-                $_SESSION['Stype'] = $donnees['type'];
-                $_SESSION['Slogin'] = $donnees['login'];
-                $_SESSION['Semail'] = $donnees['email'];
-                $_SESSION['Snom'] = $donnees['nom'];
-                $_SESSION['Sprenom'] = $donnees['prenom'];
-                $_SESSION['Stel'] = $donnees['tel'];
-            }
+        <div class="auth-content">
+            <?php if (isset($_SESSION['Sid'])): ?>
+            <div class="welcome-section">
+                <h2><i class="fas fa-user"></i> Bienvenue <?php echo $_SESSION['Slogin']; ?></h2>
+                <?php
+                if (isset($_POST['send_con'])) {
+                    if ($trouve == 1) {
+                        echo '<br><div class="connection-status success">Connexion réussie !</div>';
+                    } else {
+                        echo '<div class="connection-status error">Erreur de connexion.</div>';
+                    }
+                }
+                ?>
+                <p class="user-role">
+                    
+                    <?php echo $_SESSION['Stype'] == 1 ? 'Vous êtes connecté en tant qu’élève.' : 'Vous êtes connecté en tant que professeur.'; ?>
+                </p>
+            </div>
+            <?php else: ?>
+                <div class="connection-status error">
+                    La connexion est perdue, veuillez revenir à la
+                    <a href='index.php'>page de connexion</a> pour vous reconnecter.
+                </div>
+            <?php endif; ?>
+        </div>
+    </main>
 
-            if ($trouve == 1) {
-                
-            } else {
-                echo 'Erreur de connexion.';
-            }
-            
+    <footer class="footer">
+        <p>&copy; 2025 - BiblioStage | Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        function navigateTo(page) {
+            window.location.href = page;
         }
 
-        /*********************************************
-            On vérifie si on est connecté
-        *********************************************/
-        if (isset($_SESSION['Sid'])) {
-        ?>
-            <nav>
-                <?php if ($_SESSION['Stype'] == 1) { ?>
-                    <h1>Élève</h1>
-                    <form action="accueil.php" method="POST">
-                        <input type="submit" value="Déconnexion" name='sign_out'>
-                    </form>
-
-                    <form action="accueil.php" method="POST">
-                        <input type="submit" value="Accueil" name='accueil'>
-                    </form>
-                    
-                    <form action="perso.php" method="POST">
-                        <input type="submit" value="Profil" name='profil'>
-                    </form>
-                    
-                    <form action="compte_rendu.php" method="POST">
-                        <input type="submit" value="Compte rendus" name='compte_rendu'>
-                    </form>
-
-                    <form action="create_compte_rendu.php" method="POST">
-                        <input type="submit" value="Créer un compte rendu" name='create_compte_rendu'>
-                    </form>
-
-                    <form action="comment.php" method="POST">
-                        <input type="submit" value="Commentaires" name='comments'>
-                    </form>
-                <?php } ?>
-            </nav>
-
-            <h1>Bienvenue <?php echo $login ?></h1>
-            
-            
-            
-            <?php if ($_SESSION['Stype'] == 1) { ?>
-                <p>Vous êtes connecté en tant qu'élève.</p>
-                
-            <?php } else if ($_SESSION['Stype'] == 2) { ?>
-                <p>Vous êtes connecté en tant que professeur.</p>
-            <?php } ?>
-
-            
-        <?php
-        } else {
-            echo "La connexion est perdue, veuillez revenir à la <a href='index.php'>page d'index</a> pour vous reconnecter."; 
+        function logout() {
+            window.location.href = "accueil.php?logout=1";
         }
-    
-    ?>
+    </script>
 </body>
 </html>

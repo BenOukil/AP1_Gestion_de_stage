@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BiblioStage - Connexion</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="png" href="icon.png">
+    <link rel="stylesheet" href="style_index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -40,7 +41,7 @@
     </main>
     
     <footer class="footer">
-        <p>&copy; 2025 BiblioStage. Tous droits réservés.</p>
+        <p>&copy; 2025 - BiblioStage | Tous droits réservés.</p>
     </footer>
 </body>
 </html>

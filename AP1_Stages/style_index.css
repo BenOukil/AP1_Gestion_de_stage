@@ -1,0 +1,129 @@
+/* ==============================
+   STYLE_INDEX.CSS - Page Connexion BiblioStage
+   ============================== */
+
+/* ---- RESET GÉNÉRAL ---- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+body {
+    background-color: #f4f6f8;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ---- CONTENEUR PRINCIPAL ---- */
+.auth-container {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    max-width: 90%;
+    padding: 40px 30px;
+    text-align: center;
+}
+
+/* ---- TITRE ET LOGO ---- */
+.site-branding h1 {
+    color: #2d6cdf;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.site-branding p {
+    color: #666;
+    margin-top: 5px;
+    font-size: 0.95rem;
+}
+
+/* ---- BLOC DE CONNEXION ---- */
+.auth-content {
+    margin-top: 30px;
+    text-align: left;
+}
+
+.auth-content h2 {
+    text-align: center;
+    color: #333;
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+}
+
+/* ---- FORMULAIRE ---- */
+.form-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 40px 12px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+    border-color: #2d6cdf;
+}
+
+.form-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #777;
+}
+
+/* ---- BOUTON ---- */
+.auth-button {
+    width: 100%;
+    background-color: #2d6cdf;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.auth-button:hover {
+    background-color: #1e53b1;
+}
+
+/* ---- LIEN MOT DE PASSE OUBLIÉ ---- */
+.auth-link {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.auth-link a {
+    color: #2d6cdf;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.auth-link a:hover {
+    text-decoration: underline;
+}
+
+/* ---- PIED DE PAGE ---- */
+.footer {
+    margin-top: 30px;
+    text-align: center;
+    color: #777;
+    font-size: 0.9rem;
+}

@@ -15,6 +15,7 @@ require __DIR__ . '/phpmailer/SMTP.php';
 <html>
 <head>
     <title>Récupération de mot de passe</title>
+    <link rel="icon" type="png" href="icon.png">
 </head>
 <body>
     <?php
@@ -26,16 +27,38 @@ require __DIR__ . '/phpmailer/SMTP.php';
         
         // si on revient avec un nouveau mot de passe
         if (isset($_POST["newmdp"])) {
-            $token = $_GET["token"];
-            $newmdp = $_POST["newmdp"];
-            $newmdp = md5($newmdp);
-            
+
             $connexion = mysqli_connect($serveurBDD, $userBDD, $mdpBDD, $nomBDD);
-            $requete = "UPDATE utilisateur SET motdepasse = '$newmdp' WHERE token = '$token';";
+            $requete = "SELECT * FROM utilisateur WHERE token = '$token'";
             $resultat = mysqli_query($connexion, $requete);
             
-            echo "<hr>$requete<hr>";
-            echo "bien joué";
+            $login = 0;
+            while ($donnees = mysqli_fetch_assoc($resultat)) {
+                $date_token = $donnees["date_token"];
+            }
+            
+
+           
+
+            
+
+                $token = $_GET["token"];
+                $newmdp = $_POST["newmdp"];
+                $newmdp = md5($newmdp);
+                
+                $connexion = mysqli_connect($serveurBDD, $userBDD, $mdpBDD, $nomBDD);
+                $requete = "UPDATE utilisateur SET motdepasse = '$newmdp'  WHERE token = '$token' AND date_token >= NOW() - INTERVAL 1 HOUR;";
+                $resultat = mysqli_query($connexion, $requete);
+
+                $connexion = mysqli_connect($serveurBDD, $userBDD, $mdpBDD, $nomBDD);
+                $requete = "UPDATE utilisateur SET token = null  WHERE token = '$token';";
+                $resultat = mysqli_query($connexion, $requete);
+                
+            
+                echo "Votre mot de passe a été modifié si vous avez respecté le délai d'une heure.";
+                
+            
+        
         } else {
             // On retrouve les informations associées au token
             $token = $_GET["token"];
@@ -86,6 +109,7 @@ require __DIR__ . '/phpmailer/SMTP.php';
                 }
                 
                 $token = generateToken();
+                $URL_final = $URL.$token;
                 
                 $mail = new PHPMailer(true);
                 
@@ -109,7 +133,7 @@ require __DIR__ . '/phpmailer/SMTP.php';
                     $mail->Subject = 'Votre demande de réinitialisation de mot de passe';
                     $mail->Body    = "<b>Cliquez sur le lien pour modifier votre mot de passe : </b><br/>
                         <br/>
-                        http://localhost/AP1_Stages/oubli.php?token=" . $token . "
+                        $URL_final
                         <br/>
                         <br/>
                         Ce lien est valable 2 minutes.";

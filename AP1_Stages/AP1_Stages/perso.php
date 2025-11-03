@@ -1,133 +1,133 @@
 <?php
-    session_start();
+session_start();
+include '_conf.php';
+
+// Déconnexion
+if (isset($_POST['sign_out'])) {
+    session_destroy();
+    header("Location: index.php");
+    exit();
+}
+
+// Changement de mot de passe
+if (isset($_POST['newpassword']) && isset($_POST['oldpassword'])) {
+    $newmdp = md5($_POST['newpassword']);
+    $oldmdp = md5($_POST['oldpassword']);
+    $login = $_SESSION['Slogin'];
+
+    $connexion = mysqli_connect($serveurBDD, $userBDD, $mdpBDD, $nomBDD);
+    $requete = "SELECT motdepasse FROM utilisateur WHERE motdepasse = '$oldmdp' AND login='$login'";
+    $resultat = mysqli_query($connexion, $requete);
+
+    if (mysqli_num_rows($resultat) > 0) {
+        $requete = "UPDATE utilisateur SET motdepasse='$newmdp' WHERE login='$login'";
+        mysqli_query($connexion, $requete);
+        $msg = "<div class='connection-status success'>Mot de passe modifié avec succès ✅</div>";
+    } else {
+        $msg = "<div class='connection-status error'>Ancien mot de passe incorrect ❌</div>";
+    }
+}
 ?>
+
 <!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Profil</title>
+    <link rel="icon" type="png" href="icon.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
     <header>
+        <?php if ($_SESSION['Stype'] == 1) { 
+        include "menu_eleve.php";
+        
+     }
+     else {
+        include "menu_prof.php";
+     } ?>
+    </header>
+   
 
+     
        
+    
 
-        <!-- Menu -->
-        <?php
-        include '_conf.php';
-        ?>
+    <div class="auth-container">
+        <div class="welcome-section">
+            <h1>Vos informations personnelles</h1>
 
-
-<nav>
-                <?php if ($_SESSION['Stype'] == 1) { ?>
-                    <h1>Élève</h1>
-                    <form action="accueil.php" method="POST">
-                        <input type="submit" value="Déconnexion" name='sign_out'>
-                    </form>
-
-                    <form action="accueil.php" method="POST">
-                        <input type="submit" value="Accueil" name='accueil'>
-                    </form>
-                    
-                    <form action="perso.php" method="POST">
-                        <input type="submit" value="Profil" name='profil'>
-                    </form>
-                    
-                    <form action="compte_rendu.php" method="POST">
-                        <input type="submit" value="Compte rendus" name='compte_rendu'>
-                    </form>
-
-                    <form action="create_compte_rendu.php" method="POST">
-                        <input type="submit" value="Créer un compte rendu" name='create_compte_rendu'>
-                    </form>
-
-                    <form action="comment.php" method="POST">
-                        <input type="submit" value="Commentaires" name='comments'>
-                    </form>
-                <?php } ?>
-            </nav>
-        <?php
-        if (isset($_POST['sign_out'])) {
-            session_destroy();
-            header("Location: index.php");
-            exit();
-            ?>
-            <h1>Déconnexion réussie</h1>
             <?php
-        } else {
-            
-            }
-        ?>
-        <?php
-            if(isset($_POST['newpassword'])&&($_POST['oldpassword'])){
-                $newmdp=$_POST['newpassword'];
-                $oldmdp=$_POST['oldpassword'];
-                $login= $_SESSION['Slogin'];
-                $oldmdp=md5($oldmdp);
-                $newmdp=md5($newmdp);
-
-                $connexion = mysqli_connect($serveurBDD, $userBDD, $mdpBDD, $nomBDD);
-                $requete = "SELECT motdepasse FROM utilisateur WHERE motdepasse = '$oldmdp' ";
-                $resultat = mysqli_query($connexion, $requete);
-
-                $trouve=0;
-                while ($donnees=mysqli_fetch_assoc($resultat)){
-                            
-                            $trouve=1;
-                           
+                if ($_SESSION['Stype'] == 1) {
+                    ?>
+                    <h3><?php echo "Connecté en tant qu'élève."; ?></h2>
+                    <?php
+                } else {
+                    ?>
+                    <h3><?php echo "Connecté en tant qu'enseignant."; ?></h2>
+                    <?php
                 }
+                ?>
 
-                if(isset($_POST['newpassword']) && ($trouve==1)) {
-                    $requete = "UPDATE utilisateur SET motdepasse='$newmdp' WHERE motdepasse = '$oldmdp' AND login = '$login'";
                     
-                    $resultat = mysqli_query($connexion, $requete);
-                }
-            }
+                
+            
+            
+                
 
             
-        ?>
-
-        </header>
-        <body>
-            <h1> Vos informations personnelles </h1>
-
+            
             <br>
+        </div>
 
-            <h2> Votre nom de compte : <?php echo $_SESSION['Slogin'] ?></h2>
+        <?php if (isset($msg)) echo $msg; ?>
 
+        <div class="user-info">
+            <h2>Nom de compte : <span class="user-value"><?php echo $_SESSION['Slogin']; ?></span></h2></h2>
             <br>
-
-            <h2> Votre nom : <?php echo $_SESSION['Snom'] ?></h2>
-
+            <h2>Nom : <span class="user-value"><?php echo $_SESSION['Snom']; ?></span></h2></h2>
             <br>
-
-            <h2> Votre prénom : <?php echo $_SESSION['Sprenom'] ?></h2>
-
+            <h2>Prénom : <span class="user-value"><?php echo $_SESSION['Sprenom']; ?></span></h2></h2>
             <br>
-
-            <h2> Votre email : <?php echo $_SESSION['Semail'] ?></h2>
-
+            <h2>Email : <span class="user-value"><?php echo $_SESSION['Semail']; ?></span></h2></h2>
             <br>
+            <h2>Téléphone : <span class="user-value"><?php echo $_SESSION['Stel']; ?></span></h2></h2>
+        </div>
 
-            <h2> Votre numéro de téléphone : <?php echo $_SESSION['Stel'] ?></h2>
-
-            <br>
-
-            <h1> Changement de mot de passe :</h1>
-
-            <form method="POST" >
-
-            <label for="oldpassword">Ancien Mot de passe :</label>
+        <h1 style="margin-top:40px; color: var(--primary-color);">Changement de mot de passe</h1>
+        <br>
+        <form method="POST">
+            <label for="oldpassword">Ancien mot de passe :</label>
             <input type="password" id="oldpassword" name="oldpassword" required>
 
             <br>
             <br>
 
-            <label for="newpassword">Nouveaux Mot de passe :</label>
+            <label for="newpassword">Nouveau mot de passe :</label>
             <input type="password" id="newpassword" name="newpassword" required>
 
             <br>
             <br>
 
-            <input type="submit" value="Confirmer" name='send_con' >
+            <input type="submit" value="Confirmer" name="send_con" class="btn-primary">
         </form>
+    </div>
 
-            
+    <footer>
+        &copy; <?php echo date("Y"); ?> - BiblioStage | Tous droits réservés
+    </footer>
+</body>
 
+<script>
+        function navigateTo(page) {
+            window.location.href = page;
+        }
 
+        function logout() {
+            window.location.href = "accueil.php?logout=1";
+        }
+    </script>
 
-
+</html>
