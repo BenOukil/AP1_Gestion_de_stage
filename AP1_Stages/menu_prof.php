@@ -18,9 +18,7 @@
                     <button class="nav-btn" onclick="navigateTo('add_eleve.php')">
                         <i class="fas fa-plus-circle"></i> Ajouter un élève
                     </button>
-                    <button class="nav-btn" onclick="navigateTo('comment.php')">
-                        <i class="fas fa-comments"></i> Commentaires
-                    </button>
+                    
                 <?php endif; ?>
             </div>
 

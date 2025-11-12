@@ -17,8 +17,8 @@ session_start();
     <?php
     // Connexion
     if (isset($_POST['send_con'])) {
-        $login = $_POST['login'];
-        $motdepasse = md5($_POST['motdepasse']);
+        $login = htmlspecialchars($_POST['login']);
+        $motdepasse = htmlspecialchars(md5($_POST['motdepasse']));
         $connexion = mysqli_connect($serveurBDD, $userBDD, $mdpBDD, $nomBDD);
         $requete = "SELECT * FROM utilisateur WHERE login = '$login' AND motdepasse = '$motdepasse'";
         $resultat = mysqli_query($connexion, $requete);
@@ -45,13 +45,14 @@ session_start();
 
     <!-- Header avec navigation -->
     <header>
-        <?php if ($_SESSION['Stype'] == 1) { 
+        <?php if (isset($_SESSION['Stype'])){
+        if ($_SESSION['Stype'] == 1) { 
         include "menu_eleve.php";
         
      }
      else {
         include "menu_prof.php";
-     } ?>
+     }} ?>
     </header>
 
     <main class="auth-container">
@@ -76,13 +77,15 @@ session_start();
                 ?>
                 <p class="user-role">
                     
-                    <?php echo $_SESSION['Stype'] == 1 ? 'Vous êtes connecté en tant qu’élève.' : 'Vous êtes connecté en tant que professeur.'; ?>
+                    <?php 
+                        echo $_SESSION['Stype'] == 1 ? 'Vous êtes connecté en tant qu’élève.' : 'Vous êtes connecté en tant que professeur.';
+                         ?>
                 </p>
             </div>
             <?php else: ?>
                 <div class="connection-status error">
-                    La connexion est perdue, veuillez revenir à la
-                    <a href='index.php'>page de connexion</a> pour vous reconnecter.
+                    Erreur de connexion, veuillez revenir à la
+                    <a href='index.php'>page de connexion.</a>
                 </div>
             <?php endif; ?>
         </div>

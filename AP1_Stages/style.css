@@ -278,6 +278,33 @@ body {
     font-size: 0.85rem;
     font-weight: 600;
     transition: 0.3s ease;
+    white-space: nowrap; /* Ajout pour empêcher le retour à la ligne */
+}
+
+.delete-btn:hover {
+    background-color: #b02a37;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+/* Bouton "Vu" */
+.vu-btn {
+    display: inline-block;
+    background-color: var(--success-color);
+    color: var(--white);
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.vu-btn:hover {
+    background-color: #218838;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
 .delete-btn:hover {
@@ -349,7 +376,7 @@ thead {
 
 th {
     padding: 15px 12px;
-    text-align: left;
+    text-align: center;
     font-weight: 600;
     font-size: 0.9rem;
     text-transform: uppercase;

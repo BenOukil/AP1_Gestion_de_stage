@@ -114,7 +114,7 @@ session_start();
                         <td class="<?php echo $vu_class ?>"><?php echo $vu_text ?></td>
                         <td><?php echo $datetime_plus_1h ?></td>
                         <td>
-                            <a href="http://localhost/AP1_Stages/compte_rendu.php?iddel='<?php echo $id ?>' " class="delete-btn">Supprimer</a>
+                            <a href="<?php echo $URL?>compte_rendu.php?iddel='<?php echo $id ?>' " class="delete-btn">Supprimer</a>
                         </td>
                     </tr>
                     <?php } ?>

@@ -16,11 +16,9 @@
                         <i class="fas fa-file-alt"></i> Comptes-rendus
                     </button>
                     <button class="nav-btn" onclick="navigateTo('create_compte_rendu.php')">
-                        <i class="fas fa-plus-circle"></i> Créer
+                        <i class="fas fa-plus-circle"></i> Créer un compte-rendu
                     </button>
-                    <button class="nav-btn" onclick="navigateTo('comment.php')">
-                        <i class="fas fa-comments"></i> Commentaires
-                    </button>
+                    
                 <?php endif; ?>
             </div>
 

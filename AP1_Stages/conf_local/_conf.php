@@ -3,7 +3,6 @@
     $userBDD="root";
     $mdpBDD="root";
     $nomBDD="site_stage";
-    $URLtoken= "http://localhost/AP1_Stages/oubli.php?token=";
-    $URL="http://localhost/AP1_Stages/";
+    $URL= "http://localhost/AP1_Stages/oubli.php?token="
 
     ?>
