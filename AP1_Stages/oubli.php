@@ -10,7 +10,7 @@ require __DIR__ . '/phpmailer/SMTP.php';
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Récupération de mot de passe | BiblioStage</title>
+    <title>BiblioStage - Récupérer votre mot de passe</title>
     <link rel="icon" type="image/png" href="icon.png">
     <link rel="stylesheet" href="style_index.css">
 </head>
@@ -19,7 +19,7 @@ require __DIR__ . '/phpmailer/SMTP.php';
 <div class="auth-container">
     <div class="site-branding">
         <h1> BiblioStage</h1>
-        <p>Votre plateforme de comptes-rendus de stage</p>
+        <p>Votre plateforme de comptes rendus de stage</p>
     </div>
 
     <div class="auth-content">

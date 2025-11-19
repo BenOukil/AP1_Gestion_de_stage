@@ -6,7 +6,7 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tableau des comptes-rendus</title>
+    <title>BiblioStage - Mes comptes rendus</title>
     <link rel="icon" type="png" href="icon.png">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -53,7 +53,7 @@ session_start();
     
 
     <div class="main-content">
-        <h1 class="page-title">Tableau des comptes-rendus</h1>
+        <h1 class="page-title">Tableau des comptes rendus</h1>
         
         <?php
         $login = $_SESSION['Slogin'];
@@ -72,15 +72,16 @@ session_start();
 
         <div class="table-container">
             <table>
-                <caption>Liste de vos comptes-rendus :</caption>
+                <caption>Liste de vos comptes rendus :</caption>
                 <thead>
                     <tr>
-                        <th scope="col">Jour du compte-rendu</th>
+                        <th scope="col">Jour du compte rendu</th>
                         <th scope="col">Entreprise</th>
                         <th scope="col">Description</th>
                         <th scope="col">Tuteur</th>
                         <th scope="col">Vu</th>
                         <th scope="col">Dernière modification</th>
+                        <th scope="col"></th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
@@ -114,7 +115,10 @@ session_start();
                         <td class="<?php echo $vu_class ?>"><?php echo $vu_text ?></td>
                         <td><?php echo $datetime_plus_1h ?></td>
                         <td>
-                            <a href="<?php echo $URL?>compte_rendu.php?iddel='<?php echo $id ?>' " class="delete-btn">Supprimer</a>
+                            <a href="<?php echo $URL?>modif_compte_rendu.php?idmodif='<?php echo $id ?>' " class="modif-btn">Modifier</a>
+                        </td>
+                        <td>
+                            <a href="<?php echo $URL?>compte_rendu.php?iddel='<?php echo $id ?>'  " onclick="return confirm('Voulez-vous vraimennt supprimer ce compte rendu ? La suppression sera irréversible.')" class="delete-btn">Supprimer</a>
                         </td>
                     </tr>
                     <?php } ?>
@@ -125,7 +129,7 @@ session_start();
         <?php
         // Vérifier s'il n'y a aucun compte-rendu
         if (mysqli_num_rows($resultat) == 0) {
-            echo '<p class="no-data">Aucun compte-rendu trouvé.</p>';
+            echo '<p class="no-data">Aucun compte rendu trouvé.</p>';
         }
         ?>
     </div>

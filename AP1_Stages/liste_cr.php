@@ -42,7 +42,7 @@ if (isset($_GET['idcrnotsee'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liste des comptes-rendus</title>
+    <title>BiblioStage - Liste des comptes rendus</title>
     <link rel="icon" type="png" href="icon.png">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -58,7 +58,7 @@ if (isset($_GET['idcrnotsee'])) {
     </header>
 
     <div class="main-content">
-        <h1 class="page-title">Tableau des comptes-rendus</h1>
+        <h1 class="page-title">Tableau des comptes rendus</h1>
         
         <?php
         // Récupération des comptes-rendus
@@ -76,7 +76,7 @@ if (isset($_GET['idcrnotsee'])) {
 
         <div class="table-container">
             <table>
-                <caption>Liste des comptes-rendus :</caption>
+                <caption>Liste des comptes rendus :</caption>
                 <thead>
                     <tr>
                         <th scope="col">Nom de l'élève</th>
@@ -86,7 +86,7 @@ if (isset($_GET['idcrnotsee'])) {
                         <th scope="col">Tuteur</th>
                         <th scope="col">Vu</th>
                         <th scope="col">Dernière modification</th>
-                        <th scope="col"></th>
+                       <!-- <th scope="col"></th>-->
                     </tr>
                 </thead>
                 <tbody>
@@ -126,9 +126,9 @@ if (isset($_GET['idcrnotsee'])) {
                             <?php } ?>
                         </td>
                         <td><?php echo $datetime_plus_1h; ?></td>
-                        <td>
-                            <a href="<?php echo $URL?>liste_cr.php?iddel=<?php echo $id; ?>&idcr=<?php echo $cr ?>" class="delete-btn">Supprimer</a>
-                        </td>
+                        <!--<td>
+                            <a href="liste_cr.php?iddel=<?/*php echo $id;*/ ?>&idcr=<?/*php echo $cr */?>" class="delete-btn">Supprimer</a>
+                        </td> -->
                         
                     </tr>
                     <?php } ?>
@@ -139,7 +139,7 @@ if (isset($_GET['idcrnotsee'])) {
         <?php
         // Vérifier s'il n'y a aucun compte-rendu
         if (mysqli_num_rows($resultat) == 0) {
-            echo '<p class="no-data">Aucun compte-rendu trouvé.</p>';
+            echo '<p class="no-data">Aucun compte rendu trouvé.</p>';
         }
         ?>
     </div>

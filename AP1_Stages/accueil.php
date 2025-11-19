@@ -58,7 +58,7 @@ session_start();
     <main class="auth-container">
         <div class="site-branding">
             <h1><i class="fas fa-book-open"></i> BiblioStage</h1>
-            <p>Votre plateforme de comptes-rendus de stage</p>
+            <p>Votre plateforme de comptes rendus de stage</p>
             
         </div>
 

@@ -13,10 +13,10 @@
                         <i class="fas fa-user"></i> Profil
                     </button>
                     <button class="nav-btn" onclick="navigateTo('compte_rendu.php')">
-                        <i class="fas fa-file-alt"></i> Comptes-rendus
+                        <i class="fas fa-file-alt"></i> Comptes rendus
                     </button>
                     <button class="nav-btn" onclick="navigateTo('create_compte_rendu.php')">
-                        <i class="fas fa-plus-circle"></i> Créer un compte-rendu
+                        <i class="fas fa-plus-circle"></i> Créer un compte rendu
                     </button>
                     
                 <?php endif; ?>

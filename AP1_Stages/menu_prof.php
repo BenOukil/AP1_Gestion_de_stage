@@ -13,7 +13,7 @@
                         <i class="fas fa-user"></i> Profil
                     </button>
                     <button class="nav-btn" onclick="navigateTo('liste_cr.php')">
-                        <i class="fas fa-file-alt"></i> Liste des Comptes-rendus
+                        <i class="fas fa-file-alt"></i> Liste des Comptes rendus
                     </button>
                     <button class="nav-btn" onclick="navigateTo('add_eleve.php')">
                         <i class="fas fa-plus-circle"></i> Ajouter un élève

@@ -33,7 +33,7 @@ if (isset($_POST['newpassword']) && isset($_POST['oldpassword'])) {
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Profil</title>
+    <title>BiblioStage - Profil</title>
     <link rel="icon" type="png" href="icon.png">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">

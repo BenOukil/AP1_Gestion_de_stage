@@ -4,7 +4,7 @@ session_start();
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Compte Rendu | Création</title>
+    <title>BiblioStage - Créer compte rendu</title>
     <link rel="icon" type="png" href="icon.png">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -39,31 +39,70 @@ session_start();
         <?php
         $date = date("Y-m-d");
         
+        
         // Message de confirmation
         $confirmation_message = "";
 
         if ((isset($_POST['date_report'])) && (isset($_POST['content']))) {
+
+            // VERIF DATE EXISTE PAS DEJA DANS LES CR
+
+
+            $id=$_SESSION['Sid'];
+            
+            $connexion = mysqli_connect($serveurBDD, $userBDD, $mdpBDD, $nomBDD);
+            $requete = "SELECT cr.date, utilisateur.num FROM cr, utilisateur  WHERE cr.num_utilisateur=utilisateur.num AND utilisateur.num='$id'";
+            
+            $resultatverif = mysqli_query($connexion, $requete);
+
+            // INSERER LE CR DANS LA BDD
+
             $datetime = date("Y-m-d H:i:s");
+        
             $date_report = $_POST['date_report'];
             $content = $_POST['content'];
             $num_student = $_SESSION['Sid'];
+
+            $verif=1;
+
+
+            while ($donnees = mysqli_fetch_assoc($resultatverif)) {
+                if($donnees['date']==$date_report){
+                    
+                    $verif=0;
+                }
             
-            $connexion = mysqli_connect($serveurBDD, $userBDD, $mdpBDD, $nomBDD);
-            $requete = "INSERT INTO cr(date, description, datetime, num_utilisateur) VALUES 
-                        ('$date_report', '$content', '$datetime', $num_student)";
-            $resultat = mysqli_query($connexion, $requete);
-            
-            if ($resultat) {
-                $confirmation_message = "<div class='connection-status success'><i class='fas fa-check-circle'></i> Votre compte-rendu a été créé avec succès!</div>";
-            } else {
-                $confirmation_message = "<div class='connection-status error'><i class='fas fa-exclamation-triangle'></i> Une erreur est survenue lors de la création du compte-rendu.</div>";
+
+            }
+
+            if($date<$date_report){
+                $verif=2;
+            }
+
+            if ($verif==1){
+                $connexion = mysqli_connect($serveurBDD, $userBDD, $mdpBDD, $nomBDD);
+                $requete = "INSERT INTO cr(date, description, datetime, num_utilisateur) VALUES 
+                            ('$date_report', '$content', '$datetime', $num_student)";
+                $resultat = mysqli_query($connexion, $requete);
+                
+                if ($resultat) {
+                    $confirmation_message = "<div class='connection-status success'><i class='fas fa-check-circle'></i> Votre compte rendu a été créé avec succès!</div>";
+                } else {
+                    $confirmation_message = "<div class='connection-status error'><i class='fas fa-exclamation-triangle'></i> Une erreur est survenue lors de la création du compte rendu.</div>";
+                }
+            }
+            else if ($verif==0) {
+                $confirmation_message = "<div class='connection-status error'><i class='fas fa-exclamation-triangle'></i> Erreur. Vous ne pouvez pas créer un compte-rendu à la date d'un compte rendu existant.</div>";
+            }
+            else if ($verif==2){
+                $confirmation_message = "<div class='connection-status error'><i class='fas fa-exclamation-triangle'></i> Erreur. Vous ne pouvez pas créer un compte-rendu à une date postérieur à aujourd'hui.</div>";
             }
         }
         ?>
     </header>
 
     <div class="main-content">
-        <h1 class="page-title">Créer un nouveau compte-rendu de stage</h1>
+        <h1 class="page-title">Créer un nouveau compte rendu de stage</h1>
         
         <?php echo $confirmation_message; ?>
 
