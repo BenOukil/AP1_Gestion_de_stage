@@ -61,6 +61,7 @@ session_start();
         
             $date_report = $_POST['date_report'];
             $content = $_POST['content'];
+            $content=htmlspecialchars($content);
             $num_student = $_SESSION['Sid'];
 
             $verif=1;

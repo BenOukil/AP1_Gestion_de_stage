@@ -41,13 +41,19 @@ require __DIR__ . '/phpmailer/SMTP.php';
 
                 $newmdp = md5($_POST["newmdp"]);
                 $requete = "UPDATE utilisateur SET motdepasse = '$newmdp' 
-                            WHERE token = '$token' AND date_token >= NOW() - INTERVAL 1 HOUR;";
-                mysqli_query($connexion, $requete);
-
+                            WHERE token = '$token' AND date_token >= NOW() - INTERVAL 2 MINUTE;"; // à changer 
+                $verif = mysqli_query($connexion, $requete);
+                echo $verif;
                 $requete = "UPDATE utilisateur SET token = null WHERE token = '$token';";
                 mysqli_query($connexion, $requete);
+                if($verif){
+                    echo "<p>✅ Votre mot de passe a été modifié avec succès.</p>";
+                }
+                else{
+                    echo "<p>❌ Vous avez dépassé le délai indiqué dans le lien.</p>";
+                }
 
-                echo "<p>✅ Votre mot de passe a été modifié avec succès (si le délai d'une heure n'a pas été dépassé).</p>";
+                
             } else {
                 $connexion = mysqli_connect($serveurBDD, $userBDD, $mdpBDD, $nomBDD);
                 $requete = "SELECT * FROM utilisateur WHERE token = '$token'";

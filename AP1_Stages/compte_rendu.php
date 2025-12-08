@@ -65,7 +65,7 @@ session_start();
         AND stage.num=utilisateur.num_stage 
         AND tuteur.num=stage.num_tuteur  
         AND utilisateur.login = '$login'
-        ORDER BY datetime DESC; ";
+        ORDER BY date DESC; ";
 
         $resultat = mysqli_query($connexion, $requete);
         ?>

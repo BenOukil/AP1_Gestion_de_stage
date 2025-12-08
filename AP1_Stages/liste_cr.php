@@ -69,7 +69,7 @@ if (isset($_GET['idcrnotsee'])) {
                     WHERE utilisateur.num = cr.num_utilisateur 
                     AND stage.num = utilisateur.num_stage 
                     AND tuteur.num = stage.num_tuteur  
-                    ORDER BY datetime DESC";
+                    ORDER BY date DESC";
 
         $resultat = mysqli_query($connexion, $requete);
         ?>
